@@ -1,0 +1,19 @@
+name: ERegress
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - pip
+  - pip:
+    - numpy==1.21.4
+    - pandas==1.3.4
+    - matplotlib==3.5.0
+    - uproot==4.1.8
+    - awkward==1.5.1
+    - jupyter
+    - tensorflow
+    - keras
+    - git+git://github.com/google/qkeras.git#egg=qkeras
+    - tensorflow-model-optimization
+    - mplhep
