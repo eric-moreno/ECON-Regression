@@ -1,7 +1,7 @@
 # ECON-Regression
 Physics quantity regressions for ECON-AE
 
-##Conda environment
+## Conda environment
 
 Create conda environment:
 
