@@ -11,6 +11,7 @@ dependencies:
     - matplotlib==3.5.0
     - uproot==4.1.8
     - awkward==1.5.1
+    - tables==3.6.1
     - jupyter
     - tensorflow
     - keras
