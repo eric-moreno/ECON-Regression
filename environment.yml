@@ -12,6 +12,8 @@ dependencies:
     - uproot==4.1.8
     - awkward==1.5.1
     - tables==3.6.1
+    - seaborn==0.11.2
+    - coffea==0.7.11
     - jupyter
     - tensorflow
     - keras
