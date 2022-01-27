@@ -17,8 +17,10 @@ from keras import regularizers, Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 
 
-train_data = pd.read_hdf('../Preprocessing/data.h5').to_numpy().reshape((1000, 50, 16, 6))
-truth = pd.read_hdf('../Preprocessing/truths.h5').to_numpy()[:,3]
+train_list = [pd.read_hdf('../Preprocessing/traindata1.h5'), pd.read_hdf('../Preprocessing/traindata2.h5')]
+
+train_data = pd.concat(train_list).to_numpy().reshape((40000, 50, 16, 6))
+truth = pd.read_hdf('../Preprocessing/truths.h5').to_numpy()[:40000,3]
 
 scaler = StandardScaler()
 truth = scaler.fit_transform(truth.reshape(-1, 1))
