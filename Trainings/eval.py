@@ -38,7 +38,6 @@ mse = MeanSquaredError(reduction='none')
 
 #Loss distribution for naive simenergy sum calculation
 mse_distrib = mse(test_truth.reshape(-1, 1), test_data.reshape(8000, 800, 6)[:,:, -1].sum(axis=1).reshape(-1, 1)/16).numpy()
-print(mse_distrib)
 plt.figure()
 plt.title('Test Loss Distribution')
 plt.ylabel('Count')
