@@ -22,18 +22,10 @@ files = os.listdir('/eos/uscms/store/user/cmantill/HGCAL/EleGun/Jan24/EGM-Phase2
 df_tc_individual = []
 df_econ_individual = []
 
-files = ['ntuple_46.root',
-'ntuple_47.root',
-'ntuple_48.root',
-'ntuple_5.root',
-'ntuple_6.root',
-'ntuple_7.root',
-'ntuple_8.root',
-'ntuple_9.root']
+# test files = ['ntuple_46.root','ntuple_47.root','ntuple_48.root','ntuple_5.root','ntuple_6.root','ntuple_7.root','ntuple_8.root', 'ntuple_9.root']
 
-for i in range(len(files[:8])): 
-    file = files[i]
-    print(file)    
+for i in range(len(files[:40])): 
+    file = files[i]  
     fname = "/eos/uscms/store/user/cmantill/HGCAL/EleGun/Jan24/EGM-Phase2HLTTDRWinter20GS-00012-NoPU/crab_gun_electrons_01_25_22/220126_181410/0000/%s"%(file) 
     
     with uproot.open(fname) as f:
@@ -77,8 +69,7 @@ for i in range(len(files[:8])):
         del tc
         temp_econ = ak.to_pandas(econ).reset_index()
         del econ
-
-        i += 40
+        
         temp_tc['entry'] = (temp_tc['entry'].to_numpy()+ i*1000)
         temp_econ['entry'] = (temp_econ['entry'].to_numpy()+ i*1000)
 
@@ -130,8 +121,7 @@ print(temp.shape)
 
 # fill templates with available wafer data
 entries = []
-for i in range(8000):
-    i += 40000
+for i in range(40000):
     copy_temp = temp.copy().reset_index()
     copy_b = b.loc[i].reset_index()
     copy_temp['entry'] = i
@@ -147,4 +137,4 @@ del entries
 
 final = final.drop(columns=['id'])
 
-final.to_hdf('train_40-48k.h5', key='df', mode='w')  
+final.to_hdf('train_0-40k.h5', key='df', mode='w')  
