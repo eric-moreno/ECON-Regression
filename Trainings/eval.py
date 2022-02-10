@@ -14,23 +14,25 @@ from keras import regularizers, Sequential
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.losses import mean_absolute_error, MeanAbsoluteError, mean_squared_error, MeanSquaredError
 
-model_outdir = 'DNN_v1_onlywafers'
+model_outdir = 'DNN_v1_totalcharge'
 model_name = 'best_model_DNN'
 model_type = 'DNN' 
 
 #Load train data
-train_list = pd.read_hdf('../Preprocessing/data_0-48k.h5')
-train_list.drop(columns=['index'], inplace=True)
-train_data = train_list.to_numpy().reshape((48000, 50, 16))[:40000]
-test_data = train_list.to_numpy().reshape((48000, 50, 16))[40000:]
+train_list = pd.read_hdf('../Preprocessing/train_40-48k_chargetotal.h5')
+#train_list.drop(columns=['index'], inplace=True)
+#train_data = train_list.to_numpy().reshape((48000, 800, 5))[:40000, :, :].reshape((40000, 50, int(16*5)))
+test_data = train_list.to_numpy().reshape((8000, 800, 5))[:, :, :].reshape((8000, 50, int(16*5)))
 truth = pd.read_hdf('../Preprocessing/truths_0-48k.h5')
 train_truth = truth.to_numpy()[:40000, 3]
 test_truth = truth.to_numpy()[40000:, 3]
 
 #Predict train data
 model = keras.models.load_model('%s/%s'%(model_outdir,model_name))
+'''
 pred = model.predict(train_data)
 np.save('%s/prediction_training_0-40k.npy'%(model_outdir), pred) 
+'''
 
 #Predict test data
 pred = model.predict(test_data) 
@@ -50,7 +52,7 @@ n, bins, patches = plt.hist(mse_distrib, 30, facecolor='blue', label='Sum(SimEne
 
 #Loss distribution from model 
 mse_distrib = mse(test_truth.reshape(-1, 1), pred.reshape(-1,1)).numpy()
-n, bins, patches = plt.hist(mse_distrib, 30, facecolor='red',label='%s model'%(model_type), alpha=0.5, range=(0, 60000))
+n, bins, patches = plt.hist(mse_distrib, 30, facecolor='red',label='%s model'%(model_type), alpha=0.5, range=(0, 1200))
 plt.legend()
 plt.savefig('%s/mse_distrib_sumsimenergy.jpg'%(model_outdir))
 
