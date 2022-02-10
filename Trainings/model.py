@@ -1,7 +1,7 @@
 import numpy as np
 import keras 
 import tensorflow as tf
-from keras.layers import Input, Dense, MaxPooling2D, BatchNormalization, Flatten, Reshape, Conv2D, Conv1D, MaxPooling1D
+from keras.layers import Input, Dense, MaxPooling2D, BatchNormalization, Flatten, Reshape, Conv2D, Conv1D, MaxPooling1D, Dropout
 from keras.models import Model
 from keras import regularizers, Sequential 
 
@@ -34,14 +34,18 @@ def model_1dConvDNN(X):
     x = Dense(32, activation='relu')(x)
     output = Dense(1, activation='relu')(x)
     model = Model(inputs=inputs, outputs = output)
-    return model  
+    return model 
+
 
 def model_DNN(X): 
     inputs = Input(shape=(X.shape[1],X.shape[2]))
-    x = Dense(8, activation='relu')(inputs)
+    x = Dense(32, activation='relu')(inputs)
+    x = Dense(5, activation='relu')(x)
     x = Flatten()(x)
     x = Dense(256, activation='relu')(x)
+    #x = Dropout(0.1)(x) 
     x = Dense(64, activation='relu')(x)
+    #x = Dropout(0.1)(x) 
     x = Dense(16, activation='relu')(x)
     output = Dense(1, activation='relu')(x)
     model = Model(inputs=inputs, outputs=output)
